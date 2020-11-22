@@ -5,6 +5,7 @@ const vm = new Vue ({
     produto: false,
     isActive: true,
     carrinho: [],
+    carrinhoAtivo: false,
     mensagemAlerta: "item adicionado",
     alertaAtivo: false
   },
