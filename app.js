@@ -2,7 +2,17 @@ const vm = new Vue ({
   el: "#app",
   data: {
     produtos: [],
-    produto: false
+    produto: false,
+    isActive: true,
+    carrinho: [],
+  },
+  computed: {
+    carrinhoTotal() {
+      const total = this.carrinho.reduce((acc, curr) => {
+        return acc + curr.preco
+      }, 0)
+      return total
+    }
   },
   methods: {
     fetchProdutos() {
@@ -28,6 +38,19 @@ const vm = new Vue ({
         top: 0,
         behavior: "smooth"
       })
+    },
+    adicionarItem() {
+      this.produto.estoque--
+      const {id, nome, preco} = this.produto
+      this.carrinho.push({id, nome, preco})
+    },
+    removeProduto(index) {
+      this.carrinho.splice(index, 1)
+    },
+    checarLocalStorage() {
+      if(window.localStorage.carrinho) {
+        this.carrinho = JSON.parse(window.localStorage.carrinho)
+      }
     }
   },
   filters: {
@@ -35,7 +58,13 @@ const vm = new Vue ({
       return valor.toLocaleString("pt-BR", {style: "currency", currency: "BRL"})
     }
   },
+  watch: {
+    carrinho() {
+      window.localStorage.carrinho = JSON.stringify(this.carrinho)
+    }
+  },
   created () {
     this.fetchProdutos();
+    this.checarLocalStorage()
   },
 })
