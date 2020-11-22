@@ -18,6 +18,9 @@ const vm = new Vue ({
       .then(res => {
         this.produto = res
       })
+    },
+    contarEstrelas(qtd) {
+      return '⭐'.repeat(qtd)
     }
   },
   filters: {
