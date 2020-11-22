@@ -21,6 +21,13 @@ const vm = new Vue ({
     },
     contarEstrelas(qtd) {
       return '⭐'.repeat(qtd)
+    },
+    abrirModal(id) {
+      this.fetchProduto(id)
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
     }
   },
   filters: {
